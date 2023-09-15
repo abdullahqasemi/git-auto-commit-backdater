@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Start and end date
-START_DATE="2023-08-28"
-END_DATE="2023-09-15"
+START_DATE="2023-09-15"
+END_DATE="2023-10-20"
 sudo timedatectl set-ntp false
 # Local repo path
 REPO_DIR="/home/master/Documents/projects/test-commit"
