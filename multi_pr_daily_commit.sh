@@ -8,11 +8,8 @@ END_DATE="2024-03-10"
 REPO_DIR="/home/master/Documents/projects/test-commit"
 cd "$REPO_DIR" || exit 1
 
-# Ensure you're authenticated with GitHub CLI
-if ! gh auth status > /dev/null 2>&1; then
-    echo "GitHub CLI not authenticated. Run: gh auth login"
-    exit 1
-fi
+# Store actual current system time
+ACTUAL_DATE=$(date -I)
 
 CURRENT_DATE="$START_DATE"
 
@@ -27,36 +24,29 @@ while [[ "$CURRENT_DATE" < "$END_DATE" ]]; do
 
     echo "Processing date: $CURRENT_DATE"
 
-    # Optionally change system date (sudo required)
+    # Change system date
     sudo date -s "$CURRENT_DATE"
 
-    for i in {1..5}; do
-        BRANCH_NAME="update-${CURRENT_DATE//-/}-pr$i"
-        git checkout -b "$BRANCH_NAME"
+    # Random number of commits (15 to 20)
+    NUM_COMMITS=$((RANDOM % 6 + 15))
 
-        # Dummy file update
+    for ((i = 1; i <= NUM_COMMITS; i++)); do
         echo "Commit $i on $CURRENT_DATE" > "file-${CURRENT_DATE//-/}-$i.txt"
         git add .
+        GIT_COMMITTER_DATE="$CURRENT_DATE 12:00:00" \
+        GIT_AUTHOR_DATE="$CURRENT_DATE 12:00:00" \
         git commit -m "Commit $i on $CURRENT_DATE"
-        git push origin "$BRANCH_NAME"
-
-        # Create PR
-        gh pr create \
-            --title "PR $i for $CURRENT_DATE" \
-            --body "Auto-generated PR #$i for $CURRENT_DATE" \
-            --head "$BRANCH_NAME" \
-            --base main
-
-        # Wait briefly to allow PR to register
-        sleep 3
-
-        # Approve and merge
-        gh pr review --approve
-        gh pr merge --squash --delete-branch
     done
 
-    # Move to next date
+    # Move to next day
     CURRENT_DATE=$(date -I -d "$CURRENT_DATE + 1 day")
 done
 
-echo "All done!"
+# Reset system date
+echo "Resetting system date to actual: $ACTUAL_DATE"
+sudo date -s "$ACTUAL_DATE"
+
+# Push all changes
+git push origin main
+
+echo "All commits done and pushed!"
