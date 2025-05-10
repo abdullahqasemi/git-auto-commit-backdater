@@ -38,7 +38,7 @@ Edit the following variables in the script before running:
 ```bash
 START_DATE="2023-09-15"          # Start date in YYYY-MM-DD format
 END_DATE="2023-10-20"            # End date in YYYY-MM-DD format
-REPO_DIR="/home/master/Documents/projects/test-commit"  # Path to your Git repo
+REPO_DIR="/path-to-your-repo/test-commit"  # Path to your Git repo
 ```
 
 Make sure:
