@@ -28,7 +28,7 @@ while [[ "$CURRENT_DATE" < "$END_DATE" ]]; do
     sudo date -s "$CURRENT_DATE"
 
     # Random number of commits (15 to 20)
-    NUM_COMMITS=$((RANDOM % 6 + 15))
+    NUM_COMMITS=$((RANDOM % 20))
 
     for ((i = 1; i <= NUM_COMMITS; i++)); do
         echo "Commit $i on $CURRENT_DATE" > "src/file-${CURRENT_DATE//-/}-$i.txt"
