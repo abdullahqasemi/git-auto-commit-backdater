@@ -28,7 +28,7 @@ while [[ "$CURRENT_DATE" < "$END_DATE" ]]; do
     echo "Processing date: $CURRENT_DATE"
 
     # Optionally change system date (sudo required)
-    # sudo date -s "$CURRENT_DATE"
+    sudo date -s "$CURRENT_DATE"
 
     for i in {1..5}; do
         BRANCH_NAME="update-${CURRENT_DATE//-/}-pr$i"
