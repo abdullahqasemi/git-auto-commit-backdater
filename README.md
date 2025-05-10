@@ -1,6 +1,6 @@
 # Git Auto Commit Backdater
 
-Automate the creation of fake Git commits on past dates (excluding Sundays) to populate your Git contribution graph.  
+Automate the creation of fake Git commits on past dates (excluding Sundays) to populate your Git contribution graph.
 This script temporarily changes your system date to simulate commits on different days.
 
 > ⚠️ **Use with caution:** This script modifies your system time and should only be used in isolated or local projects, **not** production repositories.
