@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Start and end date
-START_DATE="2024-04-01"
-END_DATE="2024-04-10"
+START_DATE="2024-03-01"
+END_DATE="2024-03-10"
 
 # Local repo path
 REPO_DIR="/home/master/Documents/projects/test-commit"
