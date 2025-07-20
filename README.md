@@ -31,19 +31,27 @@ This script temporarily changes your system date to simulate commits on differen
 
 ---
 
-## 📝 Configuration
+## 📝 Usage
 
-Edit the following variables in the script before running:
+Run the script with the following arguments:
 
 ```bash
-START_DATE="2023-09-15"          # Start date in YYYY-MM-DD format
-END_DATE="2023-10-20"            # End date in YYYY-MM-DD format
-REPO_DIR="/path-to-your-repo/test-commit"  # Path to your Git repo
+sudo ./auto-commit.sh <START_DATE> <END_DATE> <REPO_DIR>
+```
+
+- `<START_DATE>`: Start date in `YYYY-MM-DD` format
+- `<END_DATE>`: End date in `YYYY-MM-DD` format
+- `<REPO_DIR>`: Path to your Git repository
+
+**Example:**
+
+```bash
+sudo ./auto-commit.sh 2023-09-15 2023-10-20 /path/to/your/repo
 ```
 
 Make sure:
 
-- `START_DATE` and `END_DATE` follow the `YYYY-MM-DD` format.
+- The dates follow the `YYYY-MM-DD` format.
 - `REPO_DIR` points to a valid Git repository.
 - You have a remote branch set up (e.g., `origin/main`).
 
@@ -60,7 +68,7 @@ Make sure:
 2. Run the script with sudo (required to change system time):
 
    ```bash
-   sudo ./auto-commit.sh
+   sudo ./auto-commit.sh <START_DATE> <END_DATE> <REPO_DIR>
    ```
 
 ---

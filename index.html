@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Git Auto Commit Backdater - Automate GitHub Contribution History
+    </title>
+
+    <!-- SEO Meta Tags -->
+    <meta
+      name="description"
+      content="Generate fake Git commit histories by backdating commits to fill your GitHub contribution graph. Educational tool for learning Git automation and contribution patterns."
+    />
+    <meta
+      name="keywords"
+      content="git, github, commits, backdating, contribution graph, automation, bash script, git history"
+    />
+    <meta name="author" content="Git Auto Commit Backdater" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph Meta Tags -->
+    <meta
+      property="og:title"
+      content="Git Auto Commit Backdater - Automate GitHub Contribution History"
+    />
+    <meta
+      property="og:description"
+      content="Generate fake Git commit histories by backdating commits to fill your GitHub contribution graph. Educational tool for learning Git automation."
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://abdullahqasemi.github.io/git-auto-commit-backdater"
+    />
+    <meta
+      property="og:image"
+      content="https://abdullahqasemi.github.io/git-auto-commit-backdater/og-image.png"
+    />
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Git Auto Commit Backdater" />
+    <meta
+      name="twitter:description"
+      content="Generate fake Git commit histories by backdating commits to fill your GitHub contribution graph."
+    />
+    <meta
+      name="twitter:image"
+      content="https://abdullahqasemi.github.io/git-auto-commit-backdater/og-image.png"
+    />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+
+    <!-- Canonical URL -->
+    <link
+      rel="canonical"
+      href="https://abdullahqasemi.github.io/git-auto-commit-backdater"
+    />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Git Auto Commit Backdater",
+        "description": "Automate fake commit histories for your GitHub profile",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Linux, macOS",
+        "programmingLanguage": "Bash",
+        "codeRepository": "https://github.com/abdullahqasemi/git-auto-commit-backdater",
+        "author": {
+          "@type": "Person",
+          "name": "Your Name"
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    </script>
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="header">
+      <nav class="nav">
+        <div class="nav-container">
+          <div class="nav-brand">
+            <svg
+              class="nav-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="12" cy="12" r="3" />
+              <path d="M12 1v6m0 6v6" />
+              <path d="m21 12-6-6-6 6-6-6" />
+            </svg>
+            <span class="nav-title">Git Backdater</span>
+          </div>
+
+          <!-- Mobile menu button -->
+          <button
+            class="mobile-menu-btn"
+            id="mobileMenuBtn"
+            aria-label="Toggle mobile menu"
+          >
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+          </button>
+
+          <!-- Desktop navigation -->
+          <div class="nav-links desktop-nav">
+            <a href="#features" class="nav-link">Features</a>
+            <a href="#how-it-works" class="nav-link">How It Works</a>
+            <a href="#usage" class="nav-link">Usage</a>
+            <a
+              href="https://github.com/abdullahqasemi/git-auto-commit-backdater"
+              class="nav-link-primary"
+              target="_blank"
+              rel="noopener"
+            >
+              <svg
+                class="nav-link-icon"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+                />
+              </svg>
+              GitHub
+            </a>
+          </div>
+
+          <!-- Mobile navigation -->
+          <div class="mobile-nav" id="mobileNav">
+            <div class="mobile-nav-content">
+              <a href="#features" class="mobile-nav-link">Features</a>
+              <a href="#how-it-works" class="mobile-nav-link">How It Works</a>
+              <a href="#usage" class="mobile-nav-link">Usage</a>
+              <a
+                href="https://github.com/abdullahqasemi/git-auto-commit-backdater"
+                class="mobile-nav-link-primary"
+                target="_blank"
+                rel="noopener"
+              >
+                <svg
+                  class="nav-link-icon"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+                  />
+                </svg>
+                GitHub
+              </a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-container">
+          <div class="hero-content">
+            <h1 class="hero-title">
+              Git Auto Commit <span class="hero-highlight">Backdater</span>
+            </h1>
+            <p class="hero-description">
+              Automate fake commit histories for your GitHub profile. Generate
+              realistic contribution patterns by backdating commits across any
+              date range.
+            </p>
+            <div class="hero-actions">
+              <a
+                href="https://github.com/abdullahqasemi/git-auto-commit-backdater/archive/main.zip"
+                class="btn btn-primary"
+              >
+                <svg
+                  class="btn-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7,10 12,15 17,10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+                Download Script
+              </a>
+              <a href="#how-it-works" class="btn btn-secondary"> Learn More </a>
+            </div>
+            <div class="hero-disclaimer">
+              <svg
+                class="disclaimer-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="8" x2="12" y2="12" />
+                <line x1="12" y1="16" x2="12.01" y2="16" />
+              </svg>
+              <span>For educational and personal fun use only</span>
+            </div>
+          </div>
+          <div class="hero-visual">
+            <div class="contribution-graph">
+              <div class="graph-header">
+                <div class="graph-title">Your GitHub Contribution Graph</div>
+                <div class="graph-subtitle">
+                  Learn how we can help you fill it up
+                </div>
+              </div>
+              <div class="graph-container">
+                <div class="graph-months">
+                  <span></span>
+                  <span>Jan</span>
+                  <span>Feb</span>
+                  <span>Mar</span>
+                  <span>Apr</span>
+                  <span>May</span>
+                  <span>Jun</span>
+                  <span>Jul</span>
+                  <span>Aug</span>
+                  <span>Sep</span>
+                  <span>Oct</span>
+                  <span>Nov</span>
+                  <span>Dec</span>
+                </div>
+                <div class="graph-main">
+                  <div class="graph-days">
+                    <span></span>
+                    <span>Mon</span>
+                    <span></span>
+                    <span>Wed</span>
+                    <span></span>
+                    <span>Fri</span>
+                    <span></span>
+                  </div>
+                  <div class="graph-weeks">
+                    <!-- Week 1 (Jan) -->
+                    <div class="graph-week">
+                      <div class="graph-square level-0"></div>
+                      <div class="graph-square level-1"></div>
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-0"></div>
+                    </div>
+                    <!-- Week 2 -->
+                    <div class="graph-week">
+                      <div class="graph-square level-1"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-1"></div>
+                    </div>
+                    <!-- Week 3 -->
+                    <div class="graph-week">
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-1"></div>
+                      <div class="graph-square level-0"></div>
+                    </div>
+                    <!-- Week 4 -->
+                    <div class="graph-week">
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-1"></div>
+                    </div>
+                    <!-- Continue with more weeks... -->
+                    <!-- Week 5 (Feb) -->
+                    <div class="graph-week">
+                      <div class="graph-square level-1"></div>
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-0"></div>
+                    </div>
+                    <!-- Week 6 -->
+                    <div class="graph-week">
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-1"></div>
+                    </div>
+                    <!-- Week 7 -->
+                    <div class="graph-week">
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-1"></div>
+                      <div class="graph-square level-0"></div>
+                    </div>
+                    <!-- Week 8 -->
+                    <div class="graph-week">
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-2"></div>
+                    </div>
+                    <!-- Week 9 (Mar) -->
+                    <div class="graph-week">
+                      <div class="graph-square level-1"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-0"></div>
+                    </div>
+                    <!-- Continue pattern for remaining weeks... -->
+                    <!-- Adding more weeks to fill the year -->
+                    <div class="graph-week">
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-1"></div>
+                    </div>
+                    <div class="graph-week">
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-1"></div>
+                      <div class="graph-square level-0"></div>
+                    </div>
+                    <div class="graph-week">
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-2"></div>
+                    </div>
+                    <div class="graph-week">
+                      <div class="graph-square level-1"></div>
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-0"></div>
+                    </div>
+                    <div class="graph-week">
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-1"></div>
+                    </div>
+                    <div class="graph-week">
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-1"></div>
+                      <div class="graph-square level-0"></div>
+                    </div>
+                    <div class="graph-week">
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-2"></div>
+                    </div>
+                    <div class="graph-week">
+                      <div class="graph-square level-1"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-0"></div>
+                    </div>
+                    <div class="graph-week">
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-1"></div>
+                    </div>
+                    <div class="graph-week">
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-1"></div>
+                      <div class="graph-square level-0"></div>
+                    </div>
+                    <div class="graph-week">
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-2"></div>
+                    </div>
+                    <div class="graph-week">
+                      <div class="graph-square level-1"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-0"></div>
+                    </div>
+                    <div class="graph-week">
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-1"></div>
+                    </div>
+                    <div class="graph-week">
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-1"></div>
+                      <div class="graph-square level-0"></div>
+                    </div>
+                    <div class="graph-week">
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-2"></div>
+                    </div>
+                    <div class="graph-week">
+                      <div class="graph-square level-1"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-0"></div>
+                    </div>
+                    <div class="graph-week">
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-1"></div>
+                    </div>
+                    <div class="graph-week">
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-1"></div>
+                      <div class="graph-square level-0"></div>
+                    </div>
+                    <div class="graph-week">
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-2"></div>
+                    </div>
+                    <div class="graph-week">
+                      <div class="graph-square level-1"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-0"></div>
+                    </div>
+                    <div class="graph-week">
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-1"></div>
+                    </div>
+                    <div class="graph-week">
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-1"></div>
+                      <div class="graph-square level-0"></div>
+                    </div>
+                    <div class="graph-week">
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-2"></div>
+                    </div>
+                    <div class="graph-week">
+                      <div class="graph-square level-0"></div>
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-1"></div>
+                      <div class="graph-square level-0"></div>
+                    </div>
+                    <div class="graph-week">
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-1"></div>
+                    </div>
+                    <div class="graph-week">
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-0"></div>
+                    </div>
+                    <div class="graph-week">
+                      <div class="graph-square level-1"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-1"></div>
+                    </div>
+                    <div class="graph-week">
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-0"></div>
+                    </div>
+                    <div class="graph-week">
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-1"></div>
+                      <div class="graph-square level-0"></div>
+                    </div>
+                    <div class="graph-week">
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-2"></div>
+                    </div>
+                    <div class="graph-week">
+                      <div class="graph-square level-1"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-0"></div>
+                    </div>
+                    <div class="graph-week">
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-1"></div>
+                    </div>
+                    <div class="graph-week">
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-1"></div>
+                      <div class="graph-square level-0"></div>
+                    </div>
+                    <div class="graph-week">
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-4"></div>
+                      <div class="graph-square level-2"></div>
+                      <div class="graph-square level-3"></div>
+                      <div class="graph-square level-2"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="graph-legend">
+                  <span>Less</span>
+                  <div class="legend-squares">
+                    <div class="graph-square level-0"></div>
+                    <div class="graph-square level-1"></div>
+                    <div class="graph-square level-2"></div>
+                    <div class="graph-square level-3"></div>
+                    <div class="graph-square level-4"></div>
+                  </div>
+                  <span>More</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="features" class="features">
+        <div class="container">
+          <h2 class="section-title">Features</h2>
+          <div class="features-grid">
+            <div class="feature-card">
+              <div class="feature-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                  <line x1="16" y1="2" x2="16" y2="6" />
+                  <line x1="8" y1="2" x2="8" y2="6" />
+                  <line x1="3" y1="10" x2="21" y2="10" />
+                </svg>
+              </div>
+              <h3 class="feature-title">Date Range Control</h3>
+              <p class="feature-description">
+                Specify any start and end date to generate commits across your
+                desired timeframe.
+              </p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="22,12 18,12 15,21 9,3 6,12 2,12" />
+                </svg>
+              </div>
+              <h3 class="feature-title">Realistic Patterns</h3>
+              <p class="feature-description">
+                Generates 15-20 commits per day with natural variation, skipping
+                Sundays for authenticity.
+              </p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <circle cx="12" cy="12" r="3" />
+                  <path d="M12 1v6m0 6v6" />
+                  <path d="m21 12-6-6-6 6-6-6" />
+                </svg>
+              </div>
+              <h3 class="feature-title">System Time Management</h3>
+              <p class="feature-description">
+                Automatically handles NTP disabling and system time restoration
+                for seamless operation.
+              </p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="16,18 22,12 16,6" />
+                  <polyline points="8,6 2,12 8,18" />
+                </svg>
+              </div>
+              <h3 class="feature-title">Bash Script</h3>
+              <p class="feature-description">
+                Simple, lightweight bash script that works on Linux and macOS
+                systems.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="how-it-works" class="how-it-works">
+        <div class="container">
+          <h2 class="section-title">How It Works</h2>
+          <div class="steps">
+            <div class="step">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <h3 class="step-title">Disable NTP</h3>
+                <p class="step-description">
+                  Temporarily disables Network Time Protocol to allow manual
+                  system time changes.
+                </p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <h3 class="step-title">Iterate Date Range</h3>
+                <p class="step-description">
+                  Loops through each day in your specified date range,
+                  intelligently skipping Sundays.
+                </p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <h3 class="step-title">Generate Commits</h3>
+                <p class="step-description">
+                  Creates 15-20 commits per day with backdated timestamps and
+                  realistic content.
+                </p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-number">4</div>
+              <div class="step-content">
+                <h3 class="step-title">Restore & Push</h3>
+                <p class="step-description">
+                  Restores your system date and pushes all commits to your main
+                  branch.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="usage" class="usage">
+        <div class="container">
+          <h2 class="section-title">Usage</h2>
+          <div class="usage-content">
+            <div class="usage-example">
+              <h3 class="usage-subtitle">Command Syntax</h3>
+              <div class="code-block">
+                <code
+                  >sudo ./auto-commit.sh &lt;START_DATE&gt; &lt;END_DATE&gt;
+                  &lt;REPO_DIR&gt;</code
+                >
+              </div>
+            </div>
+            <div class="usage-example">
+              <h3 class="usage-subtitle">Example</h3>
+              <div class="code-block">
+                <code
+                  >sudo ./auto-commit.sh 2023-01-01 2023-12-31
+                  /path/to/your/repo</code
+                >
+              </div>
+            </div>
+            <div class="usage-requirements">
+              <h3 class="usage-subtitle">Requirements</h3>
+              <ul class="requirements-list">
+                <li>Linux or macOS system</li>
+                <li>Git installed and configured</li>
+                <li>Sudo privileges (for system time changes)</li>
+                <li>Existing Git repository</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="disclaimer-section">
+        <div class="container">
+          <div class="disclaimer-card">
+            <div class="disclaimer-header">
+              <svg
+                class="disclaimer-icon-large"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"
+                />
+                <line x1="12" y1="9" x2="12" y2="13" />
+                <line x1="12" y1="17" x2="12.01" y2="17" />
+              </svg>
+              <h2 class="disclaimer-title">Important Disclaimer</h2>
+            </div>
+            <p class="disclaimer-text">
+              This script is designed for
+              <strong>educational and personal fun use only</strong>. It should
+              not be used to mislead others about your actual contribution
+              history or programming activity. Use responsibly and be
+              transparent about generated contributions when appropriate.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-brand">
+            <svg
+              class="footer-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="12" cy="12" r="3" />
+              <path d="M12 1v6m0 6v6" />
+              <path d="m21 12-6-6-6 6-6-6" />
+            </svg>
+            <span>Git Auto Commit Backdater</span>
+          </div>
+          <div class="footer-links">
+            <a
+              href="https://github.com/abdullahqasemi/git-auto-commit-backdater"
+              target="_blank"
+              rel="noopener"
+              >GitHub</a
+            >
+            <a
+              href="https://github.com/abdullahqasemi/git-auto-commit-backdater/blob/main/README.md"
+              target="_blank"
+              rel="noopener"
+              >Documentation</a
+            >
+            <a
+              href="https://github.com/abdullahqasemi/git-auto-commit-backdater/issues"
+              target="_blank"
+              rel="noopener"
+              >Issues</a
+            >
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>
+            &copy; 2024 Git Auto Commit Backdater. Open source project for
+            educational purposes.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Mobile menu functionality
+      const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+      const mobileNav = document.getElementById("mobileNav");
+
+      mobileMenuBtn.addEventListener("click", () => {
+        mobileNav.classList.toggle("active");
+        mobileMenuBtn.classList.toggle("active");
+      });
+
+      // Close mobile menu when clicking on links
+      const mobileNavLinks = document.querySelectorAll(
+        ".mobile-nav-link, .mobile-nav-link-primary"
+      );
+      mobileNavLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+          mobileNav.classList.remove("active");
+          mobileMenuBtn.classList.remove("active");
+        });
+      });
+
+      // Close mobile menu when clicking outside
+      document.addEventListener("click", (e) => {
+        if (
+          !mobileNav.contains(e.target) &&
+          !mobileMenuBtn.contains(e.target)
+        ) {
+          mobileNav.classList.remove("active");
+          mobileMenuBtn.classList.remove("active");
+        }
+      });
+
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

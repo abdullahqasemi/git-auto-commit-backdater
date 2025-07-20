@@ -1,11 +1,16 @@
 #!/bin/bash
 
-# Start and end date
-START_DATE="2023-09-15"
-END_DATE="2023-10-20"
+# Usage: ./auto-commit.sh <START_DATE> <END_DATE> <REPO_DIR>
+if [ "$#" -ne 3 ]; then
+  echo "Usage: $0 <START_DATE: YYYY-MM-DD> <END_DATE: YYYY-MM-DD> <REPO_DIR>"
+  exit 1
+fi
+
+START_DATE="$1"
+END_DATE="$2"
+REPO_DIR="$3"
+
 sudo timedatectl set-ntp false
-# Local repo path
-REPO_DIR="/home/master/Documents/projects/test-commit"
 cd "$REPO_DIR" || exit 1
 
 # Store actual current system time
