@@ -1,33 +1,32 @@
 # Git Auto Commit Backdater
 
-Automate the creation of fake Git commits on past dates (excluding Sundays) to populate your Git contribution graph.
-This script temporarily changes your system date to simulate commits on different days.
+Automate the creation of fake Git commits on past dates to populate your Git contribution graph.
+This script uses Git's commit date functionality to create backdated commits without modifying your system time.
 
-> ⚠️ **Use with caution:** This script modifies your system time and should only be used in isolated or local projects, **not** production repositories.
+> ⚠️ **Note:** This script requires write access to the repository files and GitHub authentication.
 
 ---
 
 ## 🧾 What It Does
 
-- Disables network time synchronization (NTP) to allow manual system time changes.
 - Iterates over a user-defined date range.
-- Skips Sundays.
+- Randomly skips approximately 20% of days for a more natural pattern.
 - For each date:
-  - Sets the system time.
-  - Creates 15–20 fake commits with fixed timestamps.
-- Restores your system's actual date and re-enables NTP.
+  - Creates 15–20 fake commits with backdated timestamps using Git's environment variables.
 - Pushes all commits to the `main` branch.
+- Cleans up generated files after pushing.
 
 ---
 
 ## 🛠️ Requirements
 
-- Linux (or WSL on Windows)
+- Linux, macOS, or WSL on Windows
 - `git` installed
-- `timedatectl` and `date` utilities available
-- Sudo privileges (required to change system date)
+- `date` utility available
 - A Git repository initialized at the specified path
 - A remote repository set up (e.g., `origin/main`)
+- GitHub authentication configured
+- Write access to the repository files
 
 ---
 
@@ -36,7 +35,7 @@ This script temporarily changes your system date to simulate commits on differen
 Run the script with the following arguments:
 
 ```bash
-sudo ./auto-commit.sh <START_DATE> <END_DATE> <REPO_DIR>
+./auto-commit.sh <START_DATE> <END_DATE> <REPO_DIR>
 ```
 
 - `<START_DATE>`: Start date in `YYYY-MM-DD` format
@@ -46,7 +45,7 @@ sudo ./auto-commit.sh <START_DATE> <END_DATE> <REPO_DIR>
 **Example:**
 
 ```bash
-sudo ./auto-commit.sh 2023-09-15 2023-10-20 /path/to/your/repo
+./auto-commit.sh 2023-09-15 2023-10-20 /path/to/your/repo
 ```
 
 Make sure:
@@ -65,48 +64,38 @@ Make sure:
    chmod +x auto-commit.sh
    ```
 
-2. Run the script with sudo (required to change system time):
+2. Run the script:
 
    ```bash
-   sudo ./auto-commit.sh <START_DATE> <END_DATE> <REPO_DIR>
+   ./auto-commit.sh <START_DATE> <END_DATE> <REPO_DIR>
    ```
 
 ---
 
 ## 🔍 Script Breakdown
 
-1. **Disable NTP**
+1. **Set Repository Path**
 
-   ```bash
-   sudo timedatectl set-ntp false
-   ```
+   Validates and changes to the specified repository directory.
 
-   Allows manual changes to system time.
+2. **Loop Over Dates**
 
-2. **Set Repository Path and Save Actual Date**
+   Iterates through each day between `START_DATE` and `END_DATE`, randomly skipping about 20% of days.
 
-   ```bash
-   ACTUAL_DATE=$(date -I)
-   ```
+3. **For Each Day**
 
-   Saves the real date to restore later.
-
-3. **Loop Over Dates**
-
-   Iterates through each day between `START_DATE` and `END_DATE`, skipping Sundays.
-
-4. **For Each Day**
-
-   - Sets the system time to the current loop date.
+   - Creates multiple files with timestamped content.
+   - Uses Git environment variables (`GIT_AUTHOR_DATE` and `GIT_COMMITTER_DATE`) to backdate commits without changing system time.
    - Creates a file inside a `src/` directory to simulate changes.
    - Makes 15–20 commits with timestamps fixed at `12:00:00` using `GIT_AUTHOR_DATE` and `GIT_COMMITTER_DATE`.
 
-5. **Restore System Time and Push**
+5. **Push and Clean Up**
 
    ```bash
-   sudo timedatectl set-ntp true
    git push origin main
    ```
+
+   Pushes all commits to the main branch and cleans up generated files.
 
 ---
 

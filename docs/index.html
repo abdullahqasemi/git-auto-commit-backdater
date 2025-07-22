@@ -734,10 +734,10 @@
                   <path d="m21 12-6-6-6 6-6-6" />
                 </svg>
               </div>
-              <h3 class="feature-title">System Time Management</h3>
+              <h3 class="feature-title">Git Environment Variables</h3>
               <p class="feature-description">
-                Automatically handles NTP disabling and system time restoration
-                for seamless operation.
+                Uses Git's environment variables to create backdated commits without
+                modifying your system time.
               </p>
             </div>
             <div class="feature-card">
@@ -769,10 +769,9 @@
             <div class="step">
               <div class="step-number">1</div>
               <div class="step-content">
-                <h3 class="step-title">Disable NTP</h3>
+                <h3 class="step-title">Set Up Repository</h3>
                 <p class="step-description">
-                  Temporarily disables Network Time Protocol to allow manual
-                  system time changes.
+                  Validates and prepares the repository for backdated commits.
                 </p>
               </div>
             </div>
@@ -782,7 +781,7 @@
                 <h3 class="step-title">Iterate Date Range</h3>
                 <p class="step-description">
                   Loops through each day in your specified date range,
-                  intelligently skipping Sundays.
+                  randomly skipping about 20% of days for natural patterns.
                 </p>
               </div>
             </div>
@@ -799,10 +798,9 @@
             <div class="step">
               <div class="step-number">4</div>
               <div class="step-content">
-                <h3 class="step-title">Restore & Push</h3>
+                <h3 class="step-title">Push & Clean Up</h3>
                 <p class="step-description">
-                  Restores your system date and pushes all commits to your main
-                  branch.
+                  Pushes all commits to your main branch and cleans up the generated files.
                 </p>
               </div>
             </div>
@@ -818,7 +816,7 @@
               <h3 class="usage-subtitle">Command Syntax</h3>
               <div class="code-block">
                 <code
-                  >sudo ./auto-commit.sh &lt;START_DATE&gt; &lt;END_DATE&gt;
+                  >./auto-commit.sh &lt;START_DATE&gt; &lt;END_DATE&gt;
                   &lt;REPO_DIR&gt;</code
                 >
               </div>
@@ -827,7 +825,7 @@
               <h3 class="usage-subtitle">Example</h3>
               <div class="code-block">
                 <code
-                  >sudo ./auto-commit.sh 2023-01-01 2023-12-31
+                  >./auto-commit.sh 2023-01-01 2023-12-31
                   /path/to/your/repo</code
                 >
               </div>
@@ -837,7 +835,8 @@
               <ul class="requirements-list">
                 <li>Linux or macOS system</li>
                 <li>Git installed and configured</li>
-                <li>Sudo privileges (for system time changes)</li>
+                <li>GitHub authentication configured</li>
+                <li>Write access to repository files</li>
                 <li>Existing Git repository</li>
               </ul>
             </div>
